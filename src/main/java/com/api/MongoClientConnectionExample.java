@@ -38,12 +38,13 @@ public class MongoClientConnectionExample {
                 MongoDatabase database = mongoClient.getDatabase("variables_entorno");
                 MongoCollection<Document> collection = database.getCollection("variables");
                 database.runCommand(new Document("ping", 1));
-                System.out.println("¿Que dispositivo utilizas? [Web(1) o Android(0)]");
+                System.out.println("¿Que dispositivo utilizas? [Web(true) o Android(false)]");
                 Scanner reader = new Scanner(System.in);
-                int n = reader.nextInt();
+                boolean n = reader.nextBoolean();
                 //Document doc = collection.find(eq("Variables", "Accessibility")).first();
-                Bson filter = Filters.and(Filters.eq("Web_Android",n));
+                Bson filter = Filters.and(Filters.eq("web",n));
                 collection.find(filter).forEach(doc -> System.out.println(doc.toJson()));
+
             } catch (MongoException e) {
                 e.printStackTrace();
             }
