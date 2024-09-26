@@ -1,6 +1,5 @@
 package com.api.data.model;
 
-import com.mongodb.client.model.Variable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -8,39 +7,66 @@ import jakarta.persistence.Id;
 public class Variables {
 
     @Id
-    private long id;
-    private String WebAndroid;
+    private String _id;      // MongoDB's ObjectId stored as a String
+    private boolean android;
+    private boolean web;
     private String nombre;
+    private String provider;
 
-    public Variables(){
-    }
+    // Default constructor
+    public Variables() {}
 
-    public Variables(String WebAndroid, String nombre){
-        this.WebAndroid = WebAndroid;
+    // Constructor with all fields
+    public Variables(String _id, boolean android, boolean web, String nombre, String provider) {
+        this._id = _id;
+        this.android = android;
+        this.web = web;
         this.nombre = nombre;
+        this.provider = provider;
     }
 
-    public long getId(){
-        return id;
+    // Getter and Setter for _id
+    public String getId() {
+        return _id;
     }
 
-    public void setId(){
-        this.id = id;
+    public void setId(String _id) {
+        this._id = _id;
     }
 
-    public String getWebAndroid(){
-        return WebAndroid;
+    // Getter and Setter for android
+    public boolean isAndroid() {
+        return android;
     }
 
-    public void setWebAndroid(){
-        this.WebAndroid = WebAndroid;
+    public void setAndroid(boolean android) {
+        this.android = android;
     }
 
-    public String getNombre(){
+    // Getter and Setter for web
+    public boolean isWeb() {
+        return web;
+    }
+
+    public void setWeb(boolean web) {
+        this.web = web;
+    }
+
+    // Getter and Setter for nombre
+    public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(){
+    public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    // Getter and Setter for provider
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
     }
 }
