@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+
 @Entity
 @Getter
 @Setter
@@ -20,6 +22,6 @@ public class Variables {
     private boolean web;
     private String nombre;
     private String provider;
-
+    private ArrayList<Object> lista;
     // Los constructores, getters y setters son generados automáticamente por Lombok
 }
