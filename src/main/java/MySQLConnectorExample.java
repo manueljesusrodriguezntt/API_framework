@@ -9,7 +9,7 @@ public class MySQLConnectorExample {
         // Variables de conexión a la base de datos
         String url = "jdbc:mysql://localhost:3306/variables_entorno"; // Cambia si tu servidor MySQL no está en localhost
         String user = "root"; // Cambia por tu usuario
-        String password = "root"; // Cambia por tu contraseña
+        String password = "contraseña__1"; // Cambia por tu contraseña
 
         // Consulta SQL para seleccionar todos los datos de la tabla 'tabla_prueba'
         String query = "SELECT * FROM tabla_prueba";

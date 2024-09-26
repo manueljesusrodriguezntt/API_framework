@@ -14,42 +14,25 @@
     </properties>
 
     <dependencies>
-        <!-- MySQL Connector dependency -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version> <!-- Asegúrate de que esta es la última versión -->
-        </dependency>
-
-        <!-- Spring Boot Starter Parent -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-parent</artifactId>
-            <version>3.1.1</version> <!-- Cambia a la última versión si es necesario -->
-            <scope>import</scope>
-            <type>pom</type>
-        </dependency>
-
-        <!-- Spring Boot Starter Web (para APIs y controladores web) -->
+        <!-- Spring Web para manejar la API REST -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>3.1.1</version>
         </dependency>
 
-        <!-- Spring Boot Starter Data JPA (para interactuar con bases de datos) -->
+        <!-- Spring Data MongoDB -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>3.1.1</version>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <version>3.3.2</version>
         </dependency>
 
-        <!-- Spring Boot Starter Test (para realizar pruebas) -->
+        <!-- Fongo (opcional, para simular MongoDB en memoria si no quieres instalar MongoDB) -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <version>3.1.1</version>
-            <scope>test</scope>
+            <groupId>com.github.fakemongo</groupId>
+            <artifactId>fongo</artifactId>
+            <version>2.2.0-RC2</version>
         </dependency>
 
     </dependencies>
