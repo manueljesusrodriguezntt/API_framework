@@ -13,7 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.api.Service.VariableService;
+
+import javax.print.Doc;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -44,20 +47,20 @@ public class ApiDemo {
     }
 
     @GetMapping("/{platform}")
-    public String buscar(@PathVariable("platform") String platform) {
-        FindIterable<Document> docs = collection.find(eq(platform, true));
+    public ArrayList<Document> buscar(@PathVariable("platform") String platform) {
+        ArrayList<Document> docs = collection.find(eq(platform, true)).into(new ArrayList<Document>());
+        //ArrayList<Document> d = collection.find(eq(platform, true));
+
         //Document doc = collection.find(eq("web", true)).first();
-        StringBuilder resultado = new StringBuilder();
+        /*StringBuilder resultado = new StringBuilder();
         for (Document doc : docs) {
             resultado.append(doc.toJson()).append("\n");
-        }
-        return resultado.toString();
+        }*/
+        return docs;
     }
 
-    @PostMapping(value = "/platform")
-    public ResponseEntity preguntarPlataforma(@RequestBody String platform){
+    @PostMapping(value = "/platform")public ResponseEntity preguntarPlataforma(@RequestBody String platform){
         variableService.environmentVariables(platform);
-        return new ResponseEntity(HttpStatus.OK);
-    }
+        return new ResponseEntity(HttpStatus.OK);}
 
 }

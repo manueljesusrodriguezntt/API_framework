@@ -23,5 +23,8 @@ public class Variables {
     private String nombre;
     private String provider;
     private ArrayList<Object> lista;
+
+
+
     // Los constructores, getters y setters son generados automáticamente por Lombok
 }
