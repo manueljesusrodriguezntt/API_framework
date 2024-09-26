@@ -4,10 +4,7 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
 import com.mongodb.ServerApiVersion;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -41,9 +38,20 @@ public class ApiDemo {
 
     @GetMapping("/prueba")
     public String prueba(){
-        Document doc = collection.find(eq("Web_Android", 1))
+        Document doc = collection.find(eq("web", true))
                 .first();
         return doc.toJson();
+    }
+
+    @GetMapping("/{platform}")
+    public String buscar(@PathVariable("platform") String platform) {
+        FindIterable<Document> docs = collection.find(eq(platform, true));
+        //Document doc = collection.find(eq("web", true)).first();
+        StringBuilder resultado = new StringBuilder();
+        for (Document doc : docs) {
+            resultado.append(doc.toJson()).append("\n");
+        }
+        return resultado.toString();
     }
 
     @PostMapping(value = "/platform")
