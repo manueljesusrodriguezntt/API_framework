@@ -6,5 +6,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface VariableRepository extends MongoRepository<Variables, Integer> {
+public interface VariableRepository extends MongoRepository<Variables, String> {
 }
