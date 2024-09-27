@@ -1,5 +1,7 @@
 package com.api.data.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 public class Variables {
 
     @Id
+    @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId _id;      // ObjectId de MongoDB almacenado como String
     private boolean android;
     private boolean web;
