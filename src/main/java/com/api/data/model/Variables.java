@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 
@@ -17,12 +18,13 @@ import java.util.ArrayList;
 public class Variables {
 
     @Id
-    private String _id;      // ObjectId de MongoDB almacenado como String
+    private ObjectId _id;      // ObjectId de MongoDB almacenado como String
     private boolean android;
     private boolean web;
     private String nombre;
     private String provider;
-    private ArrayList<Object> lista;
+    private ArrayList<Object> values;
+
 
 
 
