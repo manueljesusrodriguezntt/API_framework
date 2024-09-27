@@ -77,4 +77,15 @@ public class ApiDemo {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    // Eliminar una variable (DELETE)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteVariable(@PathVariable String id) {
+        if (variableService.getVariableById(id) != null) {
+            variableService.deleteVariable(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
