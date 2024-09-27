@@ -1,5 +1,6 @@
 package com.api.controllers;
 
+import com.api.data.model.Variables;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.ConnectionString;
@@ -53,6 +54,7 @@ public class ApiDemo {
         // Convertir ArrayList<Document> a JsonNode
 
         // Convertir cada documento de MongoDB en su representación JSON incluyendo el campo "_id"
+
         List<Document> docsWithId = new ArrayList<>();
         for (Document doc : docs) {
             doc.put("_id", doc.getObjectId("_id").toString()); // Convertir ObjectId a String
@@ -66,6 +68,12 @@ public class ApiDemo {
     @PostMapping(value = "/platform")
     public ResponseEntity preguntarPlataforma(@RequestBody String platform){
         variableService.environmentVariables(platform);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("/newDocument")
+    public ResponseEntity crearVariable(@RequestBody Variables variable){
+        variableService.createVariable(variable);
         return new ResponseEntity(HttpStatus.OK);
     }
 
