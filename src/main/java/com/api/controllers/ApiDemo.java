@@ -1,5 +1,7 @@
 package com.api.controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
@@ -13,9 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.api.Service.VariableService;
+import com.api.data.connectorMongo.ConnectorMongo;
 
 import javax.print.Doc;
 import java.util.ArrayList;
+import org.json.*;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -23,18 +27,8 @@ import static com.mongodb.client.model.Filters.eq;
 @RestController
 @RequestMapping("api")
 public class ApiDemo {
-    String connectionString = "mongodb+srv://nttprobandoapi:Cartuja2024@cluster0.b9wtp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-    ServerApi serverApi = ServerApi.builder()
-            .version(ServerApiVersion.V1)
-            .build();
-    MongoClientSettings settings = MongoClientSettings.builder()
-            .applyConnectionString(new ConnectionString(connectionString))
-            .serverApi(serverApi)
-            .build();
 
-    MongoClient mongoClient = MongoClients.create(settings);
-    MongoDatabase database = mongoClient.getDatabase("variables_entorno");
-    MongoCollection<Document> collection = database.getCollection("variables");
+    MongoCollection<Document> collection = ConnectorMongo.connector();
 
     @Autowired
     private VariableService variableService;
@@ -47,7 +41,7 @@ public class ApiDemo {
     }
 
     @GetMapping("/{platform}")
-    public ArrayList<Document> buscar(@PathVariable("platform") String platform) {
+    public JsonNode buscar(@PathVariable("platform") String platform) {
         ArrayList<Document> docs = collection.find(eq(platform, true)).into(new ArrayList<Document>());
         //ArrayList<Document> d = collection.find(eq(platform, true));
 
@@ -56,11 +50,23 @@ public class ApiDemo {
         for (Document doc : docs) {
             resultado.append(doc.toJson()).append("\n");
         }*/
-        return docs;
+        // Convertir ArrayList<Document> a JsonNode
+
+        // Convertir cada documento de MongoDB en su representación JSON incluyendo el campo "_id"
+        List<Document> docsWithId = new ArrayList<>();
+        for (Document doc : docs) {
+            doc.put("_id", doc.getObjectId("_id").toString()); // Convertir ObjectId a String
+            docsWithId.add(doc);
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.valueToTree(docsWithId);
+        return jsonNode;
     }
 
-    @PostMapping(value = "/platform")public ResponseEntity preguntarPlataforma(@RequestBody String platform){
+    @PostMapping(value = "/platform")
+    public ResponseEntity preguntarPlataforma(@RequestBody String platform){
         variableService.environmentVariables(platform);
-        return new ResponseEntity(HttpStatus.OK);}
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
 }
