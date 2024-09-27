@@ -40,16 +40,16 @@ public class ApiDemo {
         return doc.toJson();
     }
 
-    @GetMapping("/{platform}")
+    @GetMapping("/platform/{platform}")
     public JsonNode buscar(@PathVariable("platform") String platform) {
         ArrayList<Document> docs = collection.find(eq(platform, true)).into(new ArrayList<Document>());
         //ArrayList<Document> d = collection.find(eq(platform, true));
 
         //Document doc = collection.find(eq("web", true)).first();
-        /*StringBuilder resultado = new StringBuilder();
+        StringBuilder resultado = new StringBuilder();
         for (Document doc : docs) {
             resultado.append(doc.toJson()).append("\n");
-        }*/
+        }
         // Convertir ArrayList<Document> a JsonNode
 
         // Convertir cada documento de MongoDB en su representación JSON incluyendo el campo "_id"
