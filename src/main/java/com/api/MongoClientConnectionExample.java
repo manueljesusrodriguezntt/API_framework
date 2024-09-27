@@ -11,15 +11,8 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
-import com.mongodb.client.model.Filters.*;
 import org.bson.conversions.Bson;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Scanner;
-import javax.print.Doc;
-
-import static com.mongodb.client.model.Filters.eq;
-
 
 public class MongoClientConnectionExample {
     public static void main(String[] args) {
@@ -38,17 +31,24 @@ public class MongoClientConnectionExample {
                 MongoDatabase database = mongoClient.getDatabase("variables_entorno");
                 MongoCollection<Document> collection = database.getCollection("variables");
                 database.runCommand(new Document("ping", 1));
-                System.out.println("¿Que dispositivo utilizas? [Web(true) o Android(false)]");
+                System.out.println("¿Qué dispositivo utilizas? [web o android]?");
                 Scanner reader = new Scanner(System.in);
-                boolean n = reader.nextBoolean();
-                //Document doc = collection.find(eq("Variables", "Accessibility")).first();
-                Bson filter = Filters.and(Filters.eq("web",n));
+                String deviceType = reader.nextLine().trim().toLowerCase();
+                Bson filter;
+                if ("web".equals(deviceType)) {
+                    filter = Filters.eq("web", true);
+                } else if ("android".equals(deviceType)) {
+                    filter = Filters.eq("android", true);
+                } else {
+                    System.out.println("Entrada no válida. Por favor, introduce 'web' o 'android'.");
+                    reader.close();
+                    return;
+                }
                 collection.find(filter).forEach(doc -> System.out.println(doc.toJson()));
-
+                reader.close();
             } catch (MongoException e) {
                 e.printStackTrace();
             }
         }
     }
 }
-
