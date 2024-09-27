@@ -11,6 +11,7 @@ import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,17 +45,6 @@ public class ApiDemo {
     @GetMapping("/platform/{platform}")
     public JsonNode buscar(@PathVariable("platform") String platform) {
         ArrayList<Document> docs = collection.find(eq(platform, true)).into(new ArrayList<Document>());
-        //ArrayList<Document> d = collection.find(eq(platform, true));
-
-        //Document doc = collection.find(eq("web", true)).first();
-        StringBuilder resultado = new StringBuilder();
-        for (Document doc : docs) {
-            resultado.append(doc.toJson()).append("\n");
-        }
-        // Convertir ArrayList<Document> a JsonNode
-
-        // Convertir cada documento de MongoDB en su representación JSON incluyendo el campo "_id"
-
         List<Document> docsWithId = new ArrayList<>();
         for (Document doc : docs) {
             doc.put("_id", doc.getObjectId("_id").toString()); // Convertir ObjectId a String
@@ -65,27 +55,28 @@ public class ApiDemo {
         return jsonNode;
     }
 
-    @PostMapping(value = "/platform")
-    public ResponseEntity preguntarPlataforma(@RequestBody String platform){
-        variableService.environmentVariables(platform);
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
     @PostMapping("/newDocument")
     public ResponseEntity crearVariable(@RequestBody Variables variable){
         variableService.createVariable(variable);
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @PutMapping("/updateVariable/{id}")
+    public ResponseEntity actualizarVariable(@PathVariable String id, @RequestBody Variables variable ){
+        ObjectId idobject = new ObjectId(id);
+        variableService.updateVariable(idobject,variable);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     // Eliminar una variable (DELETE)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteVariable(@PathVariable String id) {
-        if (variableService.getVariableById(id) != null) {
-            variableService.deleteVariable(id);
+        ObjectId idobject = new ObjectId(id);
+        if (variableService.getVariableById(idobject) != null) {
+            variableService.deleteVariable(idobject);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 }
