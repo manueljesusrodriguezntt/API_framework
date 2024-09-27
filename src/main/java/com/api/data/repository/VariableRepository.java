@@ -6,6 +6,10 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface VariableRepository extends MongoRepository<Variables, ObjectId> {
+    List<Variables> findByNombre(String nombre);
+
 }

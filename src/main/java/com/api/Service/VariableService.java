@@ -42,4 +42,8 @@ public class VariableService {
     public void deleteVariable(ObjectId id) {
         repository.deleteById(id);
     }
+
+    public List<Variables> getVariablesByNombre(String nombre) {
+        return repository.findByNombre(nombre);
+    }
 }

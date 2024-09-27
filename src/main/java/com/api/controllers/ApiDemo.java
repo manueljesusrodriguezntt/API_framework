@@ -69,7 +69,7 @@ public class ApiDemo {
     }
 
     // Eliminar una variable (DELETE)
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id/{id}")
     public ResponseEntity<Void> deleteVariable(@PathVariable String id) {
         ObjectId idobject = new ObjectId(id);
         if (variableService.getVariableById(idobject) != null) {
@@ -78,5 +78,23 @@ public class ApiDemo {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<List<Variables>> getVariablesByNombre(@PathVariable String nombre) {
+        List<Variables> variables = variableService.getVariablesByNombre(nombre);
+        ObjectId idobject = new ObjectId(variables.getFirst().get_id().toString());
+        variables.getFirst().set_id(idobject);
+        if (variables.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(variables);
+        }
+    }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Variables> getVariablesById2(@PathVariable ObjectId id) {
+        Variables variables = variableService.getVariableById(id);
+        return ResponseEntity.ok(variables);
     }
 }
