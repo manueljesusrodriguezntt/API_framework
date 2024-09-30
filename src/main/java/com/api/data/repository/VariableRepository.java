@@ -10,7 +10,8 @@ import java.util.List;
 
 @Repository
 public interface VariableRepository extends MongoRepository<Variables, ObjectId> {
-    List<Variables> findByNombre(String nombre);
+
+    Variables findByNombre(String nombre);
     // Buscar por android y provider
     List<Variables> findByAndroidAndProvider(boolean android, String provider);
     // Buscar por web y provider

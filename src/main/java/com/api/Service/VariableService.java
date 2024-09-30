@@ -40,22 +40,19 @@ public class VariableService {
     }
 
     public Variables updateVariableByName(String nombre, Variables updatedVariable){
-        List<Variables> variablesExistentes = repository.findByNombre(nombre);
+        Variables variablesExistentes = repository.findByNombre(nombre);
         // Si existe al menos una variable en la lista, tomamos la primera
-        if(!variablesExistentes.isEmpty()){
-            Variables variableExistente = variablesExistentes.get(0);
-            updatedVariable.set_id(variableExistente.get_id());    // mantiene el mismo ObjectId
-            return repository.save(updatedVariable);   // guarda la variable actualizada
-        } else{
-            return null;
-        }
+
+        Variables variableExistente = variablesExistentes;
+        updatedVariable.set_id(variableExistente.get_id());    // mantiene el mismo ObjectId
+        return repository.save(updatedVariable);   // guarda la variable actualizada
     }
 
     public void deleteVariable(ObjectId id) {
         repository.deleteById(id);
     }
 
-    public List<Variables> getVariablesByNombre(String nombre) {
+    public Variables getVariablesByNombre(String nombre) {
         return repository.findByNombre(nombre);
     }
 

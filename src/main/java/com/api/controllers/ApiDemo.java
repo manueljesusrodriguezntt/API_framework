@@ -113,14 +113,13 @@ public class ApiDemo {
     }
 
     @GetMapping("/nombre/{nombre}")
-    public ResponseEntity<List<Variables>> getVariablesByNombre(@PathVariable String nombre) {
-        List<Variables> variables = variableService.getVariablesByNombre(nombre);
-        ObjectId idobject = new ObjectId(variables.getFirst().get_id().toString());
-        variables.getFirst().set_id(idobject);
-        if (variables.isEmpty()) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<Variables> getVariablesByNombre(@PathVariable String nombre) {
+        Variables variables = variableService.getVariablesByNombre(nombre);
+
+        if (variables == null) {  // Verifica si el resultado es null
+            return ResponseEntity.notFound().build();  // Retorna 404 Not Found
         } else {
-            return ResponseEntity.ok(variables);
+            return ResponseEntity.ok(variables);  // Retorna 200 OK con el objeto encontrado
         }
     }
 
@@ -132,14 +131,14 @@ public class ApiDemo {
 
     @GetMapping("/variables/{nombre}/values")
     public ResponseEntity<List<Object>> obtenerValuesPorNombre(@PathVariable String nombre) {
-        List<Variables> variable = variableService.getVariablesByNombre(nombre);
+        Variables variable = variableService.getVariablesByNombre(nombre);
 
         if (variable == null) {
             return ResponseEntity.notFound().build();
         }
 
         // Verificar si values está presente y devolverlo
-        List<Object> values = variable.getFirst().getValues();
+        List<Object> values = variable.getValues();
         if (values != null && !values.isEmpty()) {
             return ResponseEntity.ok(values);
         } else {
