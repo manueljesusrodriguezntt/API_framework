@@ -58,4 +58,15 @@ public class VariableService {
     public List<Variables> getVariablesByNombre(String nombre) {
         return repository.findByNombre(nombre);
     }
+
+    public List<Variables> getVariablesByPlatformAndProvider(String platform, String provider) {
+        if (platform.equalsIgnoreCase("android")) {
+            return repository.findByAndroidAndProvider(true, provider);
+        } else if (platform.equalsIgnoreCase("web")) {
+            return repository.findByWebAndProvider(true, provider);
+        } else {
+            throw new IllegalArgumentException("Plataforma no válida: " + platform);
+        }
+    }
+
 }

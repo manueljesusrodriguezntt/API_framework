@@ -73,6 +73,8 @@ public class ApiDemo {
     }
 
 
+
+
     @PostMapping("/newDocument")
     public ResponseEntity crearVariable(@RequestBody Variables variable){
         variableService.createVariable(variable);
@@ -144,5 +146,11 @@ public class ApiDemo {
             return ResponseEntity.ok().build();  // Devuelve un 200 vacío si no hay values
         }
     }
+
+    @GetMapping("/platformProvider/{platform}/{provider}")
+    public List<Variables> getVariablesByPlatformAndProvider(@PathVariable String platform, @PathVariable String provider) {
+        return variableService.getVariablesByPlatformAndProvider(platform, provider);
+    }
+
 
 }
