@@ -97,4 +97,22 @@ public class ApiDemo {
         Variables variables = variableService.getVariableById(id);
         return ResponseEntity.ok(variables);
     }
+
+    @GetMapping("/variables/{nombre}/values")
+    public ResponseEntity<List<Object>> obtenerValuesPorNombre(@PathVariable String nombre) {
+        List<Variables> variable = variableService.getVariablesByNombre(nombre);
+
+        if (variable == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Verificar si values está presente y devolverlo
+        List<Object> values = variable.getFirst().getValues();
+        if (values != null && !values.isEmpty()) {
+            return ResponseEntity.ok(values);
+        } else {
+            return ResponseEntity.ok().build();  // Devuelve un 200 vacío si no hay values
+        }
+    }
+
 }
