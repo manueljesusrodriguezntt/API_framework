@@ -55,17 +55,30 @@ public class ApiDemo {
         return jsonNode;
     }
 
+    // Crear una variable (POST)
     @PostMapping("/newDocument")
     public ResponseEntity crearVariable(@RequestBody Variables variable){
         variableService.createVariable(variable);
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    // Actualizar una variable por ID (PUT)
     @PutMapping("/updateVariable/{id}")
     public ResponseEntity actualizarVariable(@PathVariable String id, @RequestBody Variables variable ){
         ObjectId idobject = new ObjectId(id);
         variableService.updateVariable(idobject,variable);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    // Actualizar una variable por Nombre (PUT)
+    @PutMapping("/updateVariableNombre/{nombre}")
+    public ResponseEntity<String> updateVariableByName(@PathVariable String nombre, @RequestBody Variables variable){
+        Variables updatedVariable = variableService.updateVariableByName(nombre, variable);
+        if(updatedVariable != null){
+            return new ResponseEntity<>("Variable actualizada correctamente.", HttpStatus.OK);
+        } else{
+            return new ResponseEntity<>("La variable no existe.", HttpStatus.NOT_FOUND);
+        }
     }
 
     // Eliminar una variable (DELETE)
