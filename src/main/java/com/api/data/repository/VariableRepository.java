@@ -12,5 +12,4 @@ import java.util.List;
 public interface VariableRepository extends MongoRepository<Variables, ObjectId> {
     //Variables findByNombre(String nombre);
     List<Variables> findByNombre(String nombre);
-
 }

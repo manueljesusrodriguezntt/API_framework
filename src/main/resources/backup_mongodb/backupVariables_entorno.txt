@@ -1,0 +1,20 @@
+[
+    {"_id": {"$oid": "66f3d778fe8b19f3a6227034"}, "android": false, "nombre": "Accessibility", "web": false, "provider": "LocalSaucelabs", "values": [true, false]},
+    {"_id": {"$oid": "66f3d778fe8b19f3a6227035"}, "android": false, "web": true, "provider": "LocalSaucelabs", "_class": "com.api.data.model.Variables", "nombre": "Application"},
+    {"_id": {"$oid": "66f3d778fe8b19f3a6227036"}, "android": false, "web": true, "provider": "LocalSaucelabs", "_class": "com.api.data.model.Variables", "nombre": "Browser", "values": ["Chrome", "Firefox", "Edge", "Safari"]},
+    {"_id": {"$oid": "66f3d778fe8b19f3a6227037"}, "android": false, "web": true, "provider": "LocalSaucelabs", "_class": "com.api.data.model.Variables", "nombre": "Resolution"},
+    {"_id": {"$oid": "66f3d778fe8b19f3a6227038"}, "android": false, "web": false, "values": ["Local", "SauceLabs"], "_class": "com.api.data.model.Variables", "nombre": "Provider"},
+    {"_id": {"$oid": "66f3d778fe8b19f3a6227039"}, "android": true, "nombre": "User", "provider": "SoloSaucelabs", "web": true},
+    {"_id": {"$oid": "66f3d778fe8b19f3a622703a"}, "android": true, "nombre": "AccessToken", "provider": "SoloSaucelabs", "web": true},
+    {"_id": {"$oid": "66f3d778fe8b19f3a622703b"}, "android": false, "nombre": "BrowserVersion", "provider": "SoloSaucelabs", "web": true},
+    {"_id": {"$oid": "66f3d778fe8b19f3a622703c"}, "android": true, "nombre": "Platform", "provider": "LocalSaucelabs", "web": true, "values": ["Android", "IOS", "Web"]},
+    {"_id": {"$oid": "66f3d778fe8b19f3a622703d"}, "android": true, "nombre": "App", "provider": "LocalSaucelabs", "web": false},
+    {"_id": {"$oid": "66f3d778fe8b19f3a622703e"}, "android": true, "nombre": "AppActivity", "provider": "LocalSaucelabs", "web": false},
+    {"_id": {"$oid": "66f3d778fe8b19f3a622703f"}, "android": true, "nombre": "AppIdentifier", "provider": "LocalSaucelabs", "web": false},
+    {"_id": {"$oid": "66f3d778fe8b19f3a6227040"}, "android": true, "nombre": "AppVersion", "provider": "SoloSaucelabs", "web": false},
+    {"_id": {"$oid": "66f3d778fe8b19f3a6227041"}, "android": true, "nombre": "Udid", "provider": "SoloLocal", "web": true},
+    {"_id": {"$oid": "66f3d778fe8b19f3a6227042"}, "web": true, "android": true, "nombre": "DeviceName", "provider": "SoloSaucelabs"},
+    {"_id": {"$oid": "66f3d778fe8b19f3a6227043"}, "android": true, "nombre": "PlatformVersion", "provider": "SoloSaucelabs", "web": true},
+    {"_id": {"$oid": "66f3d778fe8b19f3a6227044"}, "android": true, "web": true, "nombre": "Language", "provider": "LocalSaucelabs", "_class": "com.api.data.model.Variables"},
+    {"_id": {"$oid": "66fa7cc9f1de039dd544b30a"}, "android": true, "web": true, "nombre": "VariablePrueba", "provider": "LocalSaucelabs", "values": ["Elemento1", "Elemento3", "Elemento2"], "_class": "com.api.data.model.Variables"}
+]
