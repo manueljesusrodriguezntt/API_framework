@@ -9,6 +9,7 @@ import com.mongodb.ServerApi;
 import com.mongodb.ServerApiVersion;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -55,6 +56,23 @@ public class ApiDemo {
         return jsonNode;
     }
 
+
+    @GetMapping("/platformNames/{platform}")
+    public JsonNode buscarNombres(@PathVariable("platform") String platform) {
+        ArrayList<Document> docs = collection.find(eq(platform, true)).into(new ArrayList<Document>());
+        List<String> nombres = new ArrayList<>();
+        for (Document doc : docs) {
+            String nombre = doc.getString("nombre");
+            if (nombre != null) {
+                nombres.add(nombre);
+            }
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.valueToTree(nombres);
+        return jsonNode;
+    }
+
+
     @PostMapping("/newDocument")
     public ResponseEntity crearVariable(@RequestBody Variables variable){
         variableService.createVariable(variable);
@@ -74,6 +92,7 @@ public class ApiDemo {
         ObjectId idobject = new ObjectId(id);
         if (variableService.getVariableById(idobject) != null) {
             variableService.deleteVariable(idobject);
+
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
