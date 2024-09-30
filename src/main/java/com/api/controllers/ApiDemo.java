@@ -86,6 +86,17 @@ public class ApiDemo {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    // Actualizar una variable por Nombre (PUT)
+    @PutMapping("/updateVariableNombre/{nombre}")
+    public ResponseEntity<String> updateVariableByName(@PathVariable String nombre, @RequestBody Variables variable){
+        Variables updatedVariable = variableService.updateVariableByName(nombre, variable);
+        if(updatedVariable != null){
+            return new ResponseEntity<>("Variable actualizada correctamente.", HttpStatus.OK);
+        } else{
+            return new ResponseEntity<>("La variable no existe.", HttpStatus.NOT_FOUND);
+        }
+    }
+
     // Eliminar una variable (DELETE)
     @DeleteMapping("/id/{id}")
     public ResponseEntity<Void> deleteVariable(@PathVariable String id) {
