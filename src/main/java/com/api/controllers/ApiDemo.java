@@ -9,6 +9,7 @@ import com.mongodb.ServerApi;
 import com.mongodb.ServerApiVersion;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -55,30 +56,34 @@ public class ApiDemo {
         return jsonNode;
     }
 
-    // Crear una variable (POST)
+
+    @GetMapping("/platformNames/{platform}")
+    public JsonNode buscarNombres(@PathVariable("platform") String platform) {
+        ArrayList<Document> docs = collection.find(eq(platform, true)).into(new ArrayList<Document>());
+        List<String> nombres = new ArrayList<>();
+        for (Document doc : docs) {
+            String nombre = doc.getString("nombre");
+            if (nombre != null) {
+                nombres.add(nombre);
+            }
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.valueToTree(nombres);
+        return jsonNode;
+    }
+
+
     @PostMapping("/newDocument")
     public ResponseEntity crearVariable(@RequestBody Variables variable){
         variableService.createVariable(variable);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    // Actualizar una variable por ID (PUT)
     @PutMapping("/updateVariable/{id}")
     public ResponseEntity actualizarVariable(@PathVariable String id, @RequestBody Variables variable ){
         ObjectId idobject = new ObjectId(id);
         variableService.updateVariable(idobject,variable);
         return new ResponseEntity(HttpStatus.OK);
-    }
-
-    // Actualizar una variable por Nombre (PUT)
-    @PutMapping("/updateVariableNombre/{nombre}")
-    public ResponseEntity<String> updateVariableByName(@PathVariable String nombre, @RequestBody Variables variable){
-        Variables updatedVariable = variableService.updateVariableByName(nombre, variable);
-        if(updatedVariable != null){
-            return new ResponseEntity<>("Variable actualizada correctamente.", HttpStatus.OK);
-        } else{
-            return new ResponseEntity<>("La variable no existe.", HttpStatus.NOT_FOUND);
-        }
     }
 
     // Eliminar una variable (DELETE)
@@ -87,6 +92,7 @@ public class ApiDemo {
         ObjectId idobject = new ObjectId(id);
         if (variableService.getVariableById(idobject) != null) {
             variableService.deleteVariable(idobject);
+
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -110,4 +116,22 @@ public class ApiDemo {
         Variables variables = variableService.getVariableById(id);
         return ResponseEntity.ok(variables);
     }
+
+    @GetMapping("/variables/{nombre}/values")
+    public ResponseEntity<List<Object>> obtenerValuesPorNombre(@PathVariable String nombre) {
+        List<Variables> variable = variableService.getVariablesByNombre(nombre);
+
+        if (variable == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Verificar si values está presente y devolverlo
+        List<Object> values = variable.getFirst().getValues();
+        if (values != null && !values.isEmpty()) {
+            return ResponseEntity.ok(values);
+        } else {
+            return ResponseEntity.ok().build();  // Devuelve un 200 vacío si no hay values
+        }
+    }
+
 }
